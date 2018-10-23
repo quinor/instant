@@ -2,3 +2,8 @@ __pycache__
 *.sublime*
 /venv/
 /activate
+*.ll
+*.bc
+*.class
+*.j
+
