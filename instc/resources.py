@@ -42,3 +42,15 @@ entry:  %res = alloca double
     ret double %t2
 }
 """
+
+JVM_RUNTIME = """
+.class  public {}
+.super  java/lang/Object
+
+; standard initializer
+.method public <init>()V
+   aload_0
+   invokespecial java/lang/Object/<init>()V
+   return
+.end method
+"""

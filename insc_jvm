@@ -6,8 +6,8 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("input", help="compiler input file")
-parser.add_argument("-o", metavar="output_file", help="compiler output file", default=None)
+parser.add_argument("-d", metavar="output_dir", help="compiler output directory", default=None)
 
 args = parser.parse_args()
 
-compile_jvm(args.input, args.o)
+compile_jvm(args.input, args.d)
