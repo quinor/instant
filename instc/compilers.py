@@ -1,4 +1,4 @@
-from . import backends, parser, analysis
+from . import backends, parser, analysis, resources
 import uuid
 import os
 
@@ -30,4 +30,4 @@ def compile_jvm(filename, outname=None):
     analysis.analize(decls) # no error handling
     prog = backends.jvm_backend(decls, cname)
     open(asfile, "w").write(prog)
-    os.system("java -jar jasmin.jar {} -d {}".format(asfile, outdir))
+    os.system("java -jar {} {} -d {}".format(resources.JASMIN_PATH, asfile, outdir))

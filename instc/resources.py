@@ -1,3 +1,4 @@
+import os
 
 LLVM_RUNTIME = """
 @dnl = internal constant [4 x i8] c"%d\\0A\\00"
@@ -54,3 +55,5 @@ JVM_RUNTIME = """
    return
 .end method
 """
+
+JASMIN_PATH = os.path.join(os.path.dirname(__file__), "../lib/jasmin.jar")
