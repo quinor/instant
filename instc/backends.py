@@ -1,5 +1,6 @@
 from . import ast
 from . import analysis
+from . import resources
 
 
 def interpret(program):
@@ -30,12 +31,14 @@ def interpret(program):
             raise Exception("no such TLD: {}".format(expr))
 
 
-def compile_llvm(program):
+def llvm_backend(program):
     reg_c = 0
     variables = {}
     result_program = []
 
-    result_program.append("declare void @printInt(i32)")
+    for l in resources.LLVM_RUNTIME.split("\n"):
+        result_program.append(l)
+
     result_program.append("define i32 @main() {")
 
     def compute(expr):
@@ -51,7 +54,7 @@ def compile_llvm(program):
             p2 = compute(expr.right)
             newid = "%reg{}".format(reg_c)
             reg_c+=1
-            result_program.append("{} = {} i32 {}, {}".format(newid, fn, p1, p2))
+            result_program.append("    {} = {} i32 {}, {}".format(newid, fn, p1, p2))
             return newid
         elif isinstance(expr, ast.Variable):
             return variables[expr.name]
@@ -65,10 +68,13 @@ def compile_llvm(program):
         if isinstance(decl, ast.Assignment):
             variables[decl.variable] = val
         elif isinstance(decl, ast.Result):
-            result_program.append("call void @printInt(i32 {})".format(val))
+            result_program.append("    call void @printInt(i32 {})".format(val))
         else:
             raise Exception("no such TLD: {}".format(expr))
 
-    result_program.append("ret i32 0")
+    result_program.append("    ret i32 0")
     result_program.append("}")
-    return result_program
+    return "".join(e+"\n" for e in result_program)
+
+def llvm_backend(program):
+    return ""

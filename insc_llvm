@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+
+from instc.compilers import compile_llvm
+import sys
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("input", help="compiler input file")
+parser.add_argument("-o", metavar="output_file", help="compiler output file", default=None)
+
+args = parser.parse_args()
+
+compile_llvm(args.input, args.o)

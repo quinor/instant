@@ -14,10 +14,8 @@ print(f)
 
 decls = parser.tld.parse(f)
 analysis.analize(decls)
-prog = backends.compile_llvm(decls)
+prog = backends.llvm_backend(decls)
 
-of = open("out.ll", "w").write("".join(e+"\n" for e in prog))
+of = open("out.ll", "w").write(prog)
 os.system("llvm-as out.ll -o out.bc")
-os.system("llvm-as runtime.ll -o runtime.bc")
-os.system("llvm-link out.bc runtime.bc -o a.bc")
 os.system("lli a.bc")
