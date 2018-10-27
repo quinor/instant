@@ -89,7 +89,7 @@ def jvm_backend(program, classname):
         if isinstance(tree, ast.Application):
             left, lh = optimize(tree.left)
             right, rh = optimize(tree.right)
-            if lh < rh and tree.function.symbol in "*+":
+            if lh < rh and tree.function.commutativeness:
                 right, left = left, right
                 rh, lh = lh, rh
             return ast.Application(left, right, tree.function), max(lh, rh+1)
