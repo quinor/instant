@@ -143,8 +143,9 @@ def jvm_backend(program, classname):
         if isinstance(decl, ast.Assignment):
             compute(decl.expression)
             result_program.append("    istore {}".format(var_counter))
-            variables[decl.variable] = var_counter
-            var_counter+=1
+            if decl.variable not in variables:
+                variables[decl.variable] = var_counter
+                var_counter+=1
         elif isinstance(decl, ast.Result):
             result_program.append("    getstatic  java/lang/System/out Ljava/io/PrintStream;")
             compute(decl.expression)

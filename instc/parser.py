@@ -21,9 +21,11 @@ operator = lexeme(P.char_from("+-*/")).map(
 
 value = number | variable
 
+
 @P.generate
 def single_expression():
     return (yield number | variable | parens(expression))
+
 
 @P.generate
 def expression():
@@ -53,6 +55,7 @@ def expression():
     assert len(val_stack) == 1 and len(op_stack) == 0
 
     return val_stack[-1]
+
 
 @P.generate
 def assignment():
